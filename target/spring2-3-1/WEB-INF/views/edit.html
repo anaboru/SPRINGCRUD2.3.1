@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EDIT USERS</title>
+    <style>table th, table td {padding: 6px;}</style>
+</head>
+<body>
+    <table border="2">
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>LASTNAME</th>
+            <th>ACTIONS</th>
+        </tr>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getName()}"></td>
+                <td th:text="${user.getLastName()}"></td>
+                <td>
+                    <a th:href="@{/users/{id}/edit(id=${user.getId()})}"><input type="button" value="Edit"></a>
+                    <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+    <br/>
+    <hr/>
+    <h2>Edit user</h2>
+    <form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
+        <label for="name">Name: </label>
+        <input type="text" th:field="*{name}" id="name">
+        <br/>
+        <label for="lastName">Last name: </label>
+        <input type="text" th:field="*{lastName}" id="lastName">
+        <br/>
+        <input type="submit" value="Update!">
+    </form>
+
+</body>
+</html>
